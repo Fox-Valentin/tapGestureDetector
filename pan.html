@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<title>Test Pan</title>
+<meta name="viewport" content="width=device-width">
+<style>
+html {
+	font-size: 2em;
+}
+article {
+	margin: 1em;
+	padding: 1em;
+	border: medium solid;
+}
+#ball1, #ball2 {
+	width: 3em;
+	height: 3em;
+	border-radius: 1.5em;
+	background: red;
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
+}
+</style>
+<script src="./src/log.js"></script>
+<script src="./src/index2.js"></script>
+</head>
+<body>
+
+<article id="ground1">
+	<div id="ball1"></div>	
+</article>
+<script>
+Zhi.detectGesture(document.getElementById('ground1'), ['pan'])
+
+var ball = document.getElementById('ball1')
+ball.addEventListener('pan', function(event){
+	var ball = event.currentTarget
+	var x = parseInt(ball.dataset.x || 0, 10),
+		y = parseInt(ball.dataset.y || 0, 10),
+		s = ball.style
+	s.transform = s.webkitTransform =
+		'translateZ(0) translate(' +
+		(x + event.motion.dx) + 'px, ' + 
+		(y + event.motion.dy) + 'px)'
+})
+ball.addEventListener('panstart', function(event){
+
+})
+ball.addEventListener('panend', function(event){
+	var ball = event.currentTarget
+	ball.dataset.x = parseInt(ball.dataset.x || 0, 10) + event.motion.dx
+	ball.dataset.y = parseInt(ball.dataset.y || 0, 10) + event.motion.dy
+})
+</script>
+
+<article id="ground2">
+	<div id="ball2"></div>	
+</article>
+
+<script>
+Zhi.detectGesture(document.getElementById('ground2'), ['pan-x'])
+
+var ball = document.getElementById('ball2')
+ball.addEventListener('pan', function(event){
+	var ball = event.currentTarget
+	var x = parseInt(ball.dataset.x || 0, 10),
+		s = ball.style
+	s.transform = s.webkitTransform =
+		'translateZ(0) translateX(' +
+		(x + event.motion.dx) + 'px)'
+})
+ball.addEventListener('panstart', function(event){
+
+})
+ball.addEventListener('panend', function(event){
+	var ball = event.currentTarget
+	ball.dataset.x = parseInt(ball.dataset.x || 0, 10) + event.motion.dx
+})
+</script>
+
+<article>
+	<p>1<p>2<p>3<p>4<p>5<p>6<p>7<p>8<p>9
+</article>
+
+</body>
+</html>
